@@ -2,7 +2,6 @@
 
 CREATE DATABASE vet_clinic;
 
-\c vet_clinic;
 
 CREATE TABLE animals (
     id int NOT NULL GENERATED ALWAYS AS IDENTITY,
