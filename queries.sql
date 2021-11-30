@@ -24,8 +24,9 @@ SELECT * FROM animals WHERE name != 'Gabumon';
 -- Find all animals with a weight between 10.4kg and 17.3kg (including the animals with the weights that equals precisely 10.4kg or 17.3kg)
 SELECT * FROM animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.4;
 
--- Inside a transaction update the animals table by setting the species column to unspecified. 
+-- Inside a transaction 
 BEGIN;
+-- update the animals table by setting the species column to unspecified. 
 UPDATE animals SET species = 'unspecified';
 -- Verify that change was made. Then roll back the change and verify that species columns went back to the state before transaction.
 ROLLBACK;
@@ -39,6 +40,12 @@ UPDATE animals SET species = 'pokemon' WHERE species='';
 -- Commit the transaction.
 COMMIT;
 -- Verify that change was made and persists after commit.
+
+
+-- Inside a transaction delete all records in the animals table, then roll back the transaction.
+BEGIN;
+DELETE FROM animals;
+ROLLBACK;
 
 
 
