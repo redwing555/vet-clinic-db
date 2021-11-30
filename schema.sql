@@ -11,3 +11,5 @@ CREATE TABLE animals (
     neutered BOOLEAN NOT NULL DEFAULT false,
     weight_kg decimal(5,2) NOT NULL
 );
+-- adding species column of type string 
+ALTER TABLE animals ADD species VARCHAR(100);
