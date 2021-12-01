@@ -56,3 +56,23 @@ VALUES ('Pokemon');
 
 INSERT INTO species (name)
 VALUES ('Digimon');
+
+
+-- Updating inserted animals to include species_id 
+
+UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
+UPDATE animals SET species_id = 1 WHERE name NOT LIKE '%mon';
+
+
+-- Updating inserted animals to include owners_id 
+UPDATE animals SET owners_id = 1 WHERE name = 'Agumon';
+UPDATE animals SET owners_id = 2 WHERE name = 'Gabumon';
+UPDATE animals SET owners_id = 2 WHERE name = 'Pikachu';
+UPDATE animals SET owners_id = 3 WHERE name = 'Devimon';
+UPDATE animals SET owners_id = 3 WHERE name = 'Plantmon';
+UPDATE animals SET owners_id = 4 WHERE name = 'Charmander';
+UPDATE animals SET owners_id = 4 WHERE name = 'Squirtle';
+UPDATE animals SET owners_id = 4 WHERE name = 'Blossom';
+UPDATE animals SET owners_id = 5 WHERE name = 'Angemon';
+UPDATE animals SET owners_id = 5 WHERE name = 'Boarmon';
+
