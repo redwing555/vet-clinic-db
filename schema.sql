@@ -41,3 +41,36 @@ ALTER TABLE animals ADD CONSTRAINT fk_species_id FOREIGN KEY (species_id) REFERE
 ALTER TABLE animals ADD COLUMN owners_id INT;
 ALTER TABLE animals ADD FOREIGN KEY (owners_id) REFERENCES owners(id);
 ALTER TABLE animals ADD CONSTRAINT fk_owners_id FOREIGN KEY (owners_id) REFERENCES owners(id);
+
+-- create table vets
+
+CREATE TABLE vets (
+    id serial NOT NULL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    date_of_graduation DATE NOT NULL
+    
+);
+
+-- table specializations to handle many-to-many relation between species and vets
+
+CREATE TABLE specializations (
+    vet_id INT ,
+    species_id INT,
+    CONSTRAINT fk_species FOREIGN KEY(species_id) REFERENCES species(id),
+    CONSTRAINT fk_vets FOREIGN KEY(vet_id) REFERENCES vets(id)
+
+);
+
+-- table visits to handle many-to-many relation between animals and vets
+
+CREATE TABLE visits (
+   animal_id INT ,
+    vet_id INT,
+    date_of_visit DATE,
+    CONSTRAINT fk_animals FOREIGN KEY(animal_id) REFERENCES animals(id),
+    CONSTRAINT fk_vets FOREIGN KEY(vet_id) REFERENCES vets(id)
+
+);
+
+
