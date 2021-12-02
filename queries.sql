@@ -218,7 +218,154 @@ GROUP BY owners_name
 --  Jodie Whittaker |            0
 -- (6 rows)
 
+-- Who was the last animal seen by William Tatcher?
+SELECT animals.name as animal_name , 
+        vets.name as vet_name, 
+        visits.date_of_visit as visit_date FROM vets
+
+        JOIN visits ON vets.id = visits.vet_id 
+        JOIN animals ON animals.id = visits.animal_id
+        
+
+        WHERE vets.name = 'William Tatcher'
+        ORDER BY visits.date_of_visit DESC;
+
+--  animal_name |    vet_name     | visit_date
+-- -------------+-----------------+------------
+--  Blossom     | William Tatcher | 2021-01-11
+--  Plantmon    | William Tatcher | 2020-08-10
+--  Agumon      | William Tatcher | 2020-07-22
+--  Agumon      | William Tatcher | 2020-05-24
+-- (4 rows)
+
+-- How many different animals did Stephanie Mendez see?
+
+SELECT COUNT(*) as num_of_visited_Mendez FROM vets
+        JOIN visits ON vets.id = visits.vet_id
+        WHERE vets.name = 'Stephanie Mendez';
+
+--  num_of_visited_mendez
+-- -----------------------
+--                      3
+-- (1 row)
 
 
+-- List all vets and their specialties, including vets with no specialties.
+
+SELECT vets.name as vet_name,
+        species.name as specialization FROM vets
+    LEFT JOIN specializations ON vets.id = specializations.vet_id
+    LEFT JOIN species ON species.id = specializations.species_id;
+
+-- List all animals that visited Stephanie Mendez between April 1st and August 30th, 2020.
+
+SELECT animals.name as animal_name ,
+        visits.date_of_visit as visit_date FROM animals 
+        JOIN visits ON visits.animal_id = animals.id
+        JOIN vets ON vets.id = visits.vet_id
+
+    WHERE vets.name = 'Stephanie Mendez' AND visits.date_of_visit<='2020-08-30' AND visits.date_of_visit>='2020-04-01';
+
+--  animal_name | visit_date
+-- -------------+------------
+--  Blossom     | 2020-05-24
+-- (1 row)
 
 
+-- What animal has the most visits to vets?
+
+SELECT  COUNT(*) AS visit_count, animals.name as animal_name FROM animals
+            JOIN visits ON visits.animal_id = animals.id
+            GROUP BY animals.name
+            ORDER BY COUNT(*) DESC;
+
+--  visit_count | animal_name
+-- -------------+-------------
+--            4 | Boarmon
+--            3 | Pikachu
+--            3 | Plantmon
+--            2 | Angemon
+--            2 | Blossom
+--            2 | Agumon
+--            1 | Gabumon
+--            1 | Charmander
+--            1 | Devimon
+--            1 | Squirtle
+-- (10 rows)
+
+-- Who was Maisy Smith's first visit?
+
+SELECT vets.name AS vet_name , visits.date_of_visit AS visit_date , animals.name AS animal_name FROM vets
+        JOIN visits ON visits.vet_id = vets.id
+        JOIN animals ON animals.id = visits.animal_id
+    WHERE vets.name = 'Maisy Smith'
+    ORDER BY visits.date_of_visit;
+
+--   vet_name   | visit_date | animal_name
+-- -------------+------------+-------------
+--  Maisy Smith | 2019-01-24 | Boarmon
+--  Maisy Smith | 2019-05-15 | Boarmon
+--  Maisy Smith | 2019-12-21 | Plantmon
+--  Maisy Smith | 2020-01-05 | Pikachu
+--  Maisy Smith | 2020-02-27 | Boarmon
+--  Maisy Smith | 2020-04-08 | Pikachu
+--  Maisy Smith | 2020-05-14 | Pikachu
+--  Maisy Smith | 2020-05-24 | Boarmon
+--  Maisy Smith | 2021-04-07 | Plantmon
+-- (9 rows)
+
+-- Details for most recent visit: animal information, vet information, and date of visit.
+
+SELECT vets.name as vet_name,
+        animals.name as animal_name,
+        visits.date_of_visit as visit_date,
+        vets.age as vet_age,
+        vets.date_of_graduation as graduation_date,
+        
+        animals.date_of_birth as animal_birth_date, 
+        animals.escape_attempts,
+        animals.weight_kg as weight,
+        
+        animals.neutered as animal_neutered FROM vets
+        JOIN visits ON visits.vet_id = vets.id
+        JOIN animals ON animals.id = visits.animal_id
+
+        ORDER BY visits.date_of_visit
+        LIMIT 1;
+
+
+--   vet_name   | animal_name | visit_date | vet_age | graduation_date | animal_birth_date | escape_attempts | weight | animal_neutered
+-- -------------+-------------+------------+---------+-----------------+-------------------+-----------------+--------+-----------------
+--  Maisy Smith | Boarmon     | 2019-01-24 |      26 | 2009-01-17      | 2005-06-07        |               7 |  20.40 | t
+-- (1 row)
+
+-- How many visits were with a vet that did not specialize in that animal's species?
+
+SELECT COUNT(*) as count_of_visits_wrong_speciality FROM visits
+    JOIN vets ON vets.id = visits.vet_id
+    JOIN animals ON animals.id = visits.animal_id
+    JOIN specializations ON specializations.vet_id = visits.vet_id
+    WHERE specializations.species_id != animals.species_id;
+
+
+--  count_of_visits_wrong_speciality
+-- ----------------------------------
+--                  6
+-- (1 row)
+
+-- What specialty should Maisy Smith consider getting? Look for the species she gets the most.
+
+SELECT species.name AS species_type, COUNT(*) FROM visits
+JOIN animals ON animals.id = visits.animal_id
+JOIN vets ON vets.id = visits.vet_id
+JOIN species ON species.id = animals.species_id
+WHERE vets.name = 'Maisy Smith'
+GROUP BY species.name; 
+
+--  species_type | count
+-- --------------+-------
+--  Digimon      |     4
+--  Pokemon      |     3
+-- (2 rows)
+
+    
