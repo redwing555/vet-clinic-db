@@ -79,3 +79,4 @@ ALTER TABLE owners ALTER COLUMN age DROP NOT NULL;
 
 CREATE INDEX animal_id on visits (animal_id ASC);
 CREATE INDEX vet_id_asc on visits (vet_id ASC);
+CREATE INDEX email_id on owners(email ASC); 
