@@ -1,16 +1,9 @@
 # clinic-vet database
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-![capture](./Capture2.PNG) 
+![capture](./Capture2.PNG)
 # clinic-vet sql diagram
 ![capture](./sql_diag.PNG) 
 
->>>>>>> Stashed changes
-=======
-![capture](./Capture2.PNG) 
->>>>>>> 7b13781c66d264f2a8f2620159f1ef18b1998e41
 
 ## Getting Started
 
